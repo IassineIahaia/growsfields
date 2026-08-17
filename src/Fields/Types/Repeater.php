@@ -23,25 +23,21 @@ if ( ! defined( 'ABSPATH' ) ) {
  * matching this project's `acf-json` exports (e.g. `field_67bc28bf1c92b` /
  * "Menu's" on the Options page field group) for a smooth Phase 3 migration.
  *
- * Deliberate v1 restriction — no nested repeaters:
+ * No nested repeaters (CONFIRMED, 2026-08-17):
  * A Repeater's own `sub_fields` may not themselves be of type `repeater`.
  * This class throws `InvalidArgumentException` at construction time if any
  * configured sub-field is a repeater. This is NOT a technical limitation —
  * nothing about the sanitize()/to_js_schema() recursion below would
- * actually break if a sub-field were itself a Repeater — it is a deliberate
- * scope cut for this batch (see `plugin-blocos-checklist-v2.md`, Fase 2,
- * Repeater: "Decidir já: limite de profundidade (ex.: repeater não pode
- * conter repeater, para simplificar) — perguntar ao utilizador se aceita
- * essa limitação"). That question was never actually put to the user
- * before this class was written, so this defaults to the conservative "no
- * nesting" answer rather than silently allowing arbitrary depth. Notably,
- * this project's own real `acf-json` data
+ * actually break if a sub-field were itself a Repeater — it was originally
+ * an open question (see `plugin-blocos-checklist-v2.md`, Fase 2, Repeater:
+ * "Decidir já: limite de profundidade... perguntar ao utilizador se aceita
+ * essa limitação"), and the user has since confirmed this restriction
+ * stands. This project's own real `acf-json` data
  * (`themes/starter-2026-iassine/acf-json/group_67bc28be09501.json`, field
- * "Menu's" / `menus`) *does* contain a two-level-deep repeater (`menus` ->
- * `menu_items`, both type `repeater`) — so this restriction will need
- * lifting (or that specific field group will need reshaping) before that
- * field group can round-trip through this engine unchanged. Revisit once
- * the user is actually asked and this is no longer an open question.
+ * "Menu's" / `menus`) contains a two-level-deep repeater (`menus` ->
+ * `menu_items`, both type `repeater`); per the user's decision, Phase 3
+ * will reshape that specific field group instead of adding nesting support
+ * to this engine.
  *
  * Security: this class is orchestration, not a sanitization boundary in its
  * own right. `sanitize()` loops rows and sub-fields and, for each cell,
@@ -301,9 +297,8 @@ class Repeater extends FieldType {
 			if ( 'repeater' === $type ) {
 				throw new \InvalidArgumentException(
 					'Growsfields: Repeater sub_fields cannot themselves be type "repeater" ' .
-					'— nested repeaters are a deliberate v1 restriction pending explicit ' .
-					'product confirmation (see the class docblock on Repeater), not a ' .
-					'technical limitation.'
+					'— nested repeaters are not supported (confirmed with the user, see the ' .
+					'class docblock on Repeater), not a technical limitation.'
 				);
 			}
 
