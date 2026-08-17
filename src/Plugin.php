@@ -7,6 +7,8 @@
 
 namespace Growsfields;
 
+use Growsfields\Fields\FieldTypeRegistry;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -16,6 +18,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Plugin
  */
 class Plugin {
+
+	/**
+	 * Registry of available field types. Instantiated in {@see self::boot()};
+	 * concrete field type registrations happen elsewhere (built-in types in
+	 * `FieldTypeRegistry::register_builtin_types()`, third-party/late
+	 * additions via the `gs_register_field_type` filter) — this class only
+	 * needs to make the registry reachable.
+	 *
+	 * @var FieldTypeRegistry
+	 */
+	private FieldTypeRegistry $field_types;
 
 	/**
 	 * Returns the plugin version, used purely to confirm autoload works.
@@ -33,7 +46,17 @@ class Plugin {
 	 * @return void
 	 */
 	public function boot(): void {
-		// Intentionally empty for now. Populated starting Phase 2.
+		$this->field_types = new FieldTypeRegistry();
+	}
+
+	/**
+	 * The field type registry, e.g. for `FieldGroupLoader` (Phase 3) or
+	 * the Phase 6-B builder UI to look up/instantiate field types.
+	 *
+	 * @return FieldTypeRegistry
+	 */
+	public function field_types(): FieldTypeRegistry {
+		return $this->field_types;
 	}
 
 	/**

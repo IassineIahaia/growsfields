@@ -18,7 +18,7 @@ Tracks implementation status against `plugin-blocos-checklist-v2.md` (replaces t
 
 ## Phase 2 — Field Types engine (full ACF Pro parity, confirmed 2026-08-17 — not just the 10 types originally in use)
 - [x] `FieldType` abstract contract
-- [ ] `FieldTypeRegistry`
+- [x] `FieldTypeRegistry`
 - [ ] Batch A — types already confirmed in use: Text, Textarea, TrueFalse, Radio, ColorPicker, Tab, Link, Image, Wysiwyg, Repeater
 - [ ] Batch B — remaining "simple" types: Number, Range, Email, URL, Password, Select, Checkbox, Button Group, Message, File, Date Picker, Date Time Picker, Time Picker
 - [ ] Batch C — relational types: Post Object, Page Link, Relationship, Taxonomy, User, Google Map, oEmbed, Gallery
