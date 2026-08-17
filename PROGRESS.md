@@ -29,7 +29,7 @@ Tracks implementation status against `plugin-blocos-checklist-v2.md` (replaces t
 
 ## Phase 3 — Field Groups engine
 - [x] JSON schema for field groups (`field-groups/`) — see `field-groups/SCHEMA.md`, confirmed by user 2026-08-17
-- [ ] `FieldGroupLoader`
+- [x] `FieldGroupLoader`
 - [ ] `LocationResolver` (combinable AND/OR rules, ACF Pro parity)
 - [ ] Conditional Logic engine
 - [ ] Migrate 7 existing field groups to new format
