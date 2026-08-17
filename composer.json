@@ -1,0 +1,23 @@
+{
+    "name": "iassine/growsfields",
+    "description": "Reusable custom block plugin built from the starter theme, with its own fields engine, post types, security hardening, and build pipeline.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Iassine Iahaia"
+        }
+    ],
+    "require": {
+        "php": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Growsfields\\": "src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}
