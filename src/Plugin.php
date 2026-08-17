@@ -47,6 +47,37 @@ class Plugin {
 	 */
 	public function boot(): void {
 		$this->field_types = new FieldTypeRegistry();
+
+		add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
+	}
+
+	/**
+	 * Prepends the plugin's own block category ("Growsfields") to the
+	 * block editor's category list, so the native blocks registered under
+	 * `blocks/` (Phase 4) have somewhere to group themselves instead of
+	 * falling back to a generic core category.
+	 *
+	 * Uses `block_categories_all`, the current filter name — its
+	 * predecessor `block_categories` (no `$editor_context` parameter) was
+	 * deprecated in WP 5.8 in favour of this one. The theme's own ACF
+	 * blocks that this plugin's blocks are modelled on never registered a
+	 * category of their own (they used core's built-in "formatting"/"text"
+	 * categories), so there is no prior title/icon to carry over here.
+	 *
+	 * @param array<int, array{slug: string, title: string, icon: string|null}> $categories Existing block categories.
+	 * @return array<int, array{slug: string, title: string, icon: string|null}> Categories with "growsfields" prepended.
+	 */
+	public function register_block_category( array $categories ): array {
+		return array_merge(
+			array(
+				array(
+					'slug'  => 'growsfields',
+					'title' => __( 'Growsfields', 'growsfields' ),
+					'icon'  => null,
+				),
+			),
+			$categories
+		);
 	}
 
 	/**

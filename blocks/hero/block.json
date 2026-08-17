@@ -1,0 +1,14 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "growsfields/hero",
+    "title": "Hero",
+    "description": "A full-width hero section with a background image, heading, optional text, and call-to-action button.",
+    "category": "growsfields",
+    "icon": "cover-image",
+    "keywords": [ "hero", "banner", "header", "cta" ],
+    "supports": {
+        "align": false
+    },
+    "textdomain": "growsfields"
+}

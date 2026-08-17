@@ -1,0 +1,14 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "growsfields/cta",
+    "title": "CTA",
+    "description": "A call-to-action section with heading, text, image, and button.",
+    "category": "growsfields",
+    "icon": "megaphone",
+    "keywords": [ "cta", "call to action", "button", "banner" ],
+    "supports": {
+        "align": false
+    },
+    "textdomain": "growsfields"
+}

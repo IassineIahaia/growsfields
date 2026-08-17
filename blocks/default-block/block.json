@@ -1,0 +1,14 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "growsfields/default-block",
+    "title": "Default block",
+    "description": "Fallback/starter block for generic content: an optional title, a rich text body, and a button.",
+    "category": "growsfields",
+    "icon": "admin-generic",
+    "keywords": [ "default", "fallback", "content", "generic" ],
+    "supports": {
+        "align": false
+    },
+    "textdomain": "growsfields"
+}

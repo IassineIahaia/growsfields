@@ -1,0 +1,14 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "growsfields/headerimage",
+    "title": "Header Image",
+    "description": "A full-width header/banner image section.",
+    "category": "growsfields",
+    "icon": "format-image",
+    "keywords": [ "header", "image", "banner" ],
+    "supports": {
+        "align": false
+    },
+    "textdomain": "growsfields"
+}

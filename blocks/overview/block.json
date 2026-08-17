@@ -1,0 +1,14 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "growsfields/overview",
+    "title": "Overzicht",
+    "description": "A dynamic overview/listing of posts from a chosen post type, with an optional title and a 'load more' or 'view all' button.",
+    "category": "growsfields",
+    "icon": "list-view",
+    "keywords": [ "overview", "listing", "posts" ],
+    "supports": {
+        "align": false
+    },
+    "textdomain": "growsfields"
+}
