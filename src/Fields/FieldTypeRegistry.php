@@ -181,8 +181,9 @@ class FieldTypeRegistry {
 	 * Built-in type registrations.
 	 *
 	 * Batch A-1 (Text, Textarea, TrueFalse, Radio, ColorPicker, Tab, Link,
-	 * Image, Wysiwyg). Repeater and the remaining Phase 2 batches land in
-	 * later checklist items and add their own line here each.
+	 * Image, Wysiwyg) plus Batch A-2 (Repeater). The remaining Phase 2
+	 * batches land in later checklist items and add their own line here
+	 * each.
 	 *
 	 * @return array<string, class-string<FieldType>>
 	 */
@@ -197,6 +198,7 @@ class FieldTypeRegistry {
 			'link'         => Types\Link::class,
 			'image'        => Types\Image::class,
 			'wysiwyg'      => Types\Wysiwyg::class,
+			'repeater'     => Types\Repeater::class,
 		);
 	}
 }
