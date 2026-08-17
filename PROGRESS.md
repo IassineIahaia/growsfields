@@ -87,7 +87,7 @@ Tracks implementation status against `plugin-blocos-checklist-v2.md` (replaces t
 ## Phase 11 — GitHub deploy
 - [x] Repo created (`growsfields`, public, https://github.com/IassineIahaia/growsfields)
 - [ ] readme.txt with changelog
-- [ ] Push main branch
+- [x] Push main branch (moved up from Phase 11, done early on 2026-08-17 as a direct consequence of the data-loss incident above — local-only work is no longer the only copy)
 - [ ] Tag/release v1.0.0
 - [ ] (Optional) GitHub Actions
 - [ ] Final clean-clone test (no ACF Pro installed)
