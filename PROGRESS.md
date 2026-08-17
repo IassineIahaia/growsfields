@@ -17,7 +17,7 @@ Tracks implementation status against `plugin-blocos-checklist-v2.md` (replaces t
 - [x] `uninstall.php` (recreated after 2026-08-17 data-loss incident, re-tested in isolation via `wp eval-file` harness — no files deleted, options cleaned correctly)
 
 ## Phase 2 — Field Types engine (full ACF Pro parity, confirmed 2026-08-17 — not just the 10 types originally in use)
-- [ ] `FieldType` abstract contract
+- [x] `FieldType` abstract contract
 - [ ] `FieldTypeRegistry`
 - [ ] Batch A — types already confirmed in use: Text, Textarea, TrueFalse, Radio, ColorPicker, Tab, Link, Image, Wysiwyg, Repeater
 - [ ] Batch B — remaining "simple" types: Number, Range, Email, URL, Password, Select, Checkbox, Button Group, Message, File, Date Picker, Date Time Picker, Time Picker
