@@ -88,35 +88,53 @@ Não escrever nada depois disto — esperar a resposta do utilizador.
 | Prefixo de funções/hooks/classes | `gs_` |
 | Text domain | `growsfields` |
 | Namespace PHP (PSR-4) | `Growsfields\` → pasta `src/` |
-| Depende do ACF Pro? | **Não** — motor de campos próprio |
+| Depende do ACF Pro? | **Não** — motor de campos próprio, mas com paridade total de funcionalidades (ver nota de âmbito acima) |
 | UI de admin para criar campos (Fase 6-B)? | **Sim, confirmado** |
+| Repeater aceita aninhamento (repeater dentro de repeater)? | **Não, confirmado 2026-08-17.** O field group real "Menu's" (`acf-json`) tem repeater aninhado — vai ser **reestruturado** na Fase 3 (migração dos 7 grupos), não vamos suportar aninhamento no motor. |
+| Push para o GitHub | Feito **mais cedo que o planeado** (logo após o incidente de perda de dados, 2026-08-17), como salvaguarda — já não é preciso esperar pela Fase 11 para isso especificamente (mas as outras tarefas da Fase 11 — readme.txt, tag v1.0.0, etc. — continuam por fazer) |
 | Commits/comentários de código | Inglês |
 | Conversa com o utilizador | Português |
-| Repositório GitHub | `IassineIahaia/growsfields`, remote já configurado |
+| Repositório GitHub | `IassineIahaia/growsfields`, remote já configurado, **com push feito e sincronizado** |
 
-## ONDE PARÁMOS (estado exato)
+## FLUXO DE TRABALHO COM SUBAGENTS (adotado a partir da Fase 2, 2026-08-17)
 
-**Fase 1 — Fundação do plugin**, itens concluídos e testados (✅):
-- [x] Header do plugin (`growsfields.php`)
-- [x] Constantes (`GS_PATH`, `GS_URL`, `GS_VERSION`)
-- [x] Composer autoload PSR-4 (`composer.json`, `src/Plugin.php`, `vendor/autoload.php` gerado via `composer install` — perdido no incidente de 2026-08-17, regenerar)
-- [x] Checagem de dependência do ACF Pro implementada, testada, **e depois revertida** (o plugin já não depende do ACF Pro) — ambos os estados foram testados e confirmados a funcionar
-- [x] Hooks de ativação/desativação (`register_activation_hook`/`register_deactivation_hook`) — testado e confirmado: `wp option get gs_version` devolveu `0.1.0`, `wp option get gs_activated_at` devolveu um timestamp válido, ambos gravados corretamente na ativação
+O utilizador pediu explicitamente para dividir o trabalho por subagents "de forma profissional". Depois de testar paralelismo real (rejeitado) e sequencial-com-subagents (adotado), o padrão que está a funcionar bem é:
 
-**Item em curso, código recriado após o incidente de perda de dados de 2026-08-17, a aguardar novo teste:**
-- [ ] **`uninstall.php`** — último item da Fase 1. Conteúdo: guarda `WP_UNINSTALL_PLUGIN`, `delete_option( 'gs_version' )`, `delete_option( 'gs_activated_at' )`. Já tinha sido testado uma vez com sucesso (as options foram corretamente removidas), mas o teste em si (`wp plugin uninstall growsfields`) apagou todo o diretório do plugin incluindo o `.git` — ver nota do incidente acima. **Não repetir esse comando.** Para re-testar em segurança: copiar a pasta do plugin para um local temporário fora do repositório git e correr o uninstall só lá, OU usar `wp eval-file uninstall.php` depois de definir manualmente a constante `WP_UNINSTALL_PLUGIN`, nunca `wp plugin uninstall` nem "Apagar" no wp-admin contra a pasta real.
+1. Para cada item do checklist, lançar **um único subagent de cada vez** (tool `Agent`, `subagent_type: "general-purpose"`) com um prompt exaustivo: contexto do projeto, ficheiros a ler primeiro, requisitos exatos, e instrução explícita para **não** tocar em `PROGRESS.md`/`HANDOFF-PROMPT.md` nem correr comandos git.
+2. **Nunca confiar cegamente no relatório do subagent** — ler sempre os ficheiros que ele diz ter criado/alterado, diretamente, antes de apresentar ao utilizador. Já se encontraram bugs reais desta forma (ver nota sobre `FieldGroupLoader` abaixo).
+3. Pedir ao subagent para correr `php -l` e um smoke test próprio (o binário PHP real deste ambiente, quando não há Site Shell à mão, está em `C:\Users\Iassine\AppData\Roaming\Local\lightning-services\php-8.2.29+0\bin\win64\php.exe` — nem `php` nem XAMPP estão no PATH normal). Um script de teste autónomo (fora do WP) precisa de `define('ABSPATH', ...)` antes de `require vendor/autoload.php` (todas as classes têm guard `if (!defined('ABSPATH')) exit;`) e stubs mínimos para `do_action`/`apply_filters`/`sanitize_text_field` etc.
+4. Depois da verificação própria, apresentar o item ao utilizador no formato definido acima (com passos `wp eval-file`/`php -l` para o Site Shell dele), esperar confirmação, só depois marcar `PROGRESS.md` e fazer o commit.
+5. Ficheiros de teste temporários (harnesses `wp eval-file`) são sempre apagados depois de confirmados — nunca ficam commitados.
 
-**Pendente antes de continuar para a Fase 2:**
-- [ ] `composer install` (Site Shell) para regenerar `vendor/` (gitignored, perdido no incidente, mas reproduzível a partir do `composer.json` recuperado)
-- [ ] `git init` + reconectar `origin` + commit único de recuperação (histórico item-a-item anterior perdido, ver nota do incidente)
+**Nota importante:** um subagent já entregou um bug real (não um falso positivo de teste) — a resolução de `clone` no `FieldGroupLoader` não tratava recursivamente um clone aninhado dentro de um grupo clonado. Foi corrigido diretamente (sem novo subagent) depois de identificado na revisão. Continuar a rever com este nível de detalhe, não só confiar no "smoke test passou" do relatório do subagent.
 
-**Nota pendente, não bloqueante:** a `Description:` no header do `growsfields.php` e no `composer.json` ainda menciona "ACF Pro" — desatualizado desde o pivot, por corrigir quando for conveniente.
+## ONDE PARÁMOS (estado exato, fim do dia 2026-08-17)
+
+**Fase 1 — Fundação do plugin:** ✅ **completa** (incluindo `uninstall.php`, testado em isolamento via `wp eval-file` depois do incidente de perda de dados).
+
+**Fase 2 — Motor de Field Types:** ✅ **completa** — 34 tipos de campo (paridade total ACF Pro), `FieldType` abstrato, `FieldTypeRegistry` com filtro `gs_register_field_type`.
+
+**Fase 3 — Motor de Field Groups**, em curso:
+- [x] Schema JSON (`field-groups/SCHEMA.md`, confirmado pelo utilizador)
+- [x] `FieldGroupLoader` (`src/Fields/FieldGroupLoader.php`) — testado, incluindo a correção do bug de clone aninhado
+- [ ] **`LocationResolver` — EM CURSO, subagent lançado, ainda sem resposta quando a sessão parou.** Vai resolver, para um contexto dado (bloco/post_type/options_page/etc.), quais field groups se aplicam, usando as regras `location` (OR-de-AND) do schema. **Ao retomar: verificar se a notificação do subagent já chegou; se sim, rever o ficheiro `src/Fields/LocationResolver.php` a fundo (ver fluxo de trabalho acima) antes de apresentar ao utilizador. Se não, esperar ou relançar.** O subagent foi avisado para sinalizar como decisão a rever: a incompatibilidade entre `location.block` nos dados reais (ainda usa prefixo antigo `acf/...`, ex. `acf/overview`) e os novos blocos nativos registados como `growsfields/...` (Fase 4 prep) — **decidir isto com o utilizador antes de avançar**.
+- [ ] Conditional Logic engine (avaliação das regras já guardadas em `FieldType::get_conditional_logic()` — ainda só round-trip, nada avalia)
+- [ ] Migrar os 7 field groups reais (`acf-json/` do tema) para o novo formato — **incluindo reestruturar "Menu's"** para não usar repeater aninhado (decisão já tomada, ver tabela acima)
+
+**Fase 4 — Blocos Gutenberg**, preparação feita (fora do checklist formal, adiantado com autorização do utilizador):
+- [x] `blocks/{hero,cta,body,headerimage,overview,default-block}/block.json` — só metadata estática (nome `growsfields/{slug}`, título, ícone, categoria), **sem `attributes`** (depende do schema da Fase 3)
+- [x] Categoria de bloco "Growsfields" registada via `block_categories_all`
+- [ ] Tudo o resto (attributes, `edit.js` genérico, `render.php`, os 6 blocos completos) fica para quando a Fase 3 estiver fechada
+
+**Ícone do plugin:** ✅ feito (`assets/icon.svg`, `assets/admin-icon.svg`) — cosmético, não é item do checklist.
+
+**Lembrete do utilizador (2026-08-17):** o objetivo final é validar tudo isto contra o **tema real** `starter-2026-iassine` (`wp-content/themes/starter-2026-iassine/`), de onde vieram os `acf-json` originais — as Fases 3-5 devem ser testadas contra esse tema, não só smoke tests isolados.
 
 ## PARA ONDE VAMOS (checklist completo)
 
 Ver o ficheiro anexo/fornecido `plugin-blocos-checklist-v2.md` para o roadmap completo e detalhado (Fases 0 a 11). Resumo das fases seguintes após terminar a Fase 1:
 
-- **Fase 2** — Motor de Field Types, com paridade total ao ACF Pro (~30 tipos, ver lista na secção de âmbito acima). Ordem sugerida: primeiro os 10 já confirmados em uso (Text, Textarea, TrueFalse, Radio, ColorPicker, Tab, Link, Image, Wysiwyg, Repeater), depois os restantes tipos "simples" (Number, Range, Email, URL, Password, Select, Checkbox, Button Group, Message, File, Date Picker, Date Time Picker, Time Picker), depois os relacionais (Post Object, Page Link, Relationship, Taxonomy, User, Google Map, oEmbed, Gallery), e por último os de layout complexos (Group, Flexible Content, Clone)
+- **Fase 2** — ✅ **Completa.** Motor de Field Types, com paridade total ao ACF Pro (34 tipos implementados e testados).
 - **Fase 3** — Motor de Field Groups (parser JSON próprio, `FieldGroupLoader`, `LocationResolver` com regras combináveis AND/OR, Conditional Logic engine, migração dos 7 field groups originais)
 - **Fase 4** — Blocos Gutenberg nativos (hero, cta, body, headerimage, overview, default-block) com `edit.js` genérico dirigido pela definição do field group
 - **Fase 5** — CPT Project com meta boxes nativas
