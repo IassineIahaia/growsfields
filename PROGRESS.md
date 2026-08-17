@@ -28,7 +28,7 @@ Tracks implementation status against `plugin-blocos-checklist-v2.md` (replaces t
 **Phase 2 complete: 34 field types implemented (Batch A-1/A-2/B/C/D), `FieldType` contract, `FieldTypeRegistry` with `gs_register_field_type` filter.**
 
 ## Phase 3 — Field Groups engine
-- [ ] JSON schema for field groups (`field-groups/`)
+- [x] JSON schema for field groups (`field-groups/`) — see `field-groups/SCHEMA.md`, confirmed by user 2026-08-17
 - [ ] `FieldGroupLoader`
 - [ ] `LocationResolver` (combinable AND/OR rules, ACF Pro parity)
 - [ ] Conditional Logic engine

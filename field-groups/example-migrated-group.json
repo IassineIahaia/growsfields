@@ -1,0 +1,87 @@
+{
+  "key": "group_6488bc50dbae3",
+  "title": "Block: Overzicht",
+  "fields": [
+    {
+      "key": "field_695b80d41a5dc",
+      "type": "tab",
+      "name": "",
+      "label": "Content",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "placement": "top",
+      "endpoint": false
+    },
+    {
+      "key": "field_67d0031a8d17f",
+      "type": "text",
+      "name": "title",
+      "label": "Titel",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "default_value": "",
+      "maxlength": "",
+      "placeholder": ""
+    },
+    {
+      "key": "field_6488bc50051f0",
+      "type": "radio",
+      "name": "choose_overview",
+      "label": "Kies overzicht",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [
+        [
+          { "field": "field_67ed36dd41608", "operator": "==", "value": "overview" }
+        ]
+      ],
+      "choices": { "none": "Geen", "project": "Projecten" },
+      "default_value": "none"
+    },
+    {
+      "key": "field_695d1200bb26f",
+      "type": "radio",
+      "name": "amount",
+      "label": "Amount",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "choices": { "all": "All", "latest": "Latest" },
+      "default_value": "all"
+    },
+    {
+      "key": "field_695d1322d9ed4",
+      "type": "link",
+      "name": "button",
+      "label": "Button",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [
+        [
+          { "field": "field_695d1200bb26f", "operator": "==", "value": "latest" }
+        ]
+      ],
+      "return_format": "array"
+    }
+  ],
+  "location": [
+    [
+      { "param": "block", "operator": "==", "value": "acf/overview" }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": [],
+  "active": true,
+  "description": ""
+}
