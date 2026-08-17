@@ -183,9 +183,10 @@ class FieldTypeRegistry {
 	 * Batch A-1 (Text, Textarea, TrueFalse, Radio, ColorPicker, Tab, Link,
 	 * Image, Wysiwyg) plus Batch A-2 (Repeater) plus Batch B (Number,
 	 * Range, Email, URL, Password, Select, Checkbox, Button Group, Message,
-	 * File, Date Picker, Date Time Picker, Time Picker). The remaining
-	 * Phase 2 batches land in later checklist items and add their own line
-	 * here each.
+	 * File, Date Picker, Date Time Picker, Time Picker) plus Batch C
+	 * (Post Object, Page Link, Relationship, Taxonomy, User, Google Map,
+	 * oEmbed, Gallery). The remaining Phase 2 batches land in later
+	 * checklist items and add their own line here each.
 	 *
 	 * @return array<string, class-string<FieldType>>
 	 */
@@ -214,6 +215,14 @@ class FieldTypeRegistry {
 			'date_picker'       => Types\DatePicker::class,
 			'date_time_picker'  => Types\DateTimePicker::class,
 			'time_picker'       => Types\TimePicker::class,
+			'post_object'       => Types\PostObject::class,
+			'page_link'         => Types\PageLink::class,
+			'relationship'      => Types\Relationship::class,
+			'taxonomy'          => Types\Taxonomy::class,
+			'user'              => Types\User::class,
+			'google_map'        => Types\GoogleMap::class,
+			'oembed'            => Types\OEmbed::class,
+			'gallery'           => Types\Gallery::class,
 		);
 	}
 }
