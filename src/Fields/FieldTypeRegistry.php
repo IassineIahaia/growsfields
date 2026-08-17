@@ -7,6 +7,8 @@
 
 namespace Growsfields\Fields;
 
+use Growsfields\Fields\Types;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -178,16 +180,23 @@ class FieldTypeRegistry {
 	/**
 	 * Built-in type registrations.
 	 *
-	 * Intentionally empty for now: no concrete field type classes exist
-	 * yet (Text, Textarea, ... land in the Phase 2 batches right after
-	 * this checklist item). Each subsequent item adds exactly one line
-	 * here, e.g.:
-	 *
-	 *     'text' => Types\Text::class,
+	 * Batch A-1 (Text, Textarea, TrueFalse, Radio, ColorPicker, Tab, Link,
+	 * Image, Wysiwyg). Repeater and the remaining Phase 2 batches land in
+	 * later checklist items and add their own line here each.
 	 *
 	 * @return array<string, class-string<FieldType>>
 	 */
 	private function register_builtin_types(): array {
-		return array();
+		return array(
+			'text'         => Types\Text::class,
+			'textarea'     => Types\Textarea::class,
+			'true_false'   => Types\TrueFalse::class,
+			'radio'        => Types\Radio::class,
+			'color_picker' => Types\ColorPicker::class,
+			'tab'          => Types\Tab::class,
+			'link'         => Types\Link::class,
+			'image'        => Types\Image::class,
+			'wysiwyg'      => Types\Wysiwyg::class,
+		);
 	}
 }
