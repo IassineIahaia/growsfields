@@ -14,7 +14,7 @@ Tracks implementation status against `plugin-blocos-checklist-v2.md` (replaces t
 - [x] Composer autoload (PSR-4)
 - [x] Revert ACF Pro dependency check (plugin no longer requires ACF Pro)
 - [x] Activation / deactivation hooks
-- [ ] `uninstall.php` (code recreated after 2026-08-17 data-loss incident — see note below — awaiting re-test)
+- [x] `uninstall.php` (recreated after 2026-08-17 data-loss incident, re-tested in isolation via `wp eval-file` harness — no files deleted, options cleaned correctly)
 
 ## Phase 2 — Field Types engine (full ACF Pro parity, confirmed 2026-08-17 — not just the 10 types originally in use)
 - [ ] `FieldType` abstract contract
