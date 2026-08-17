@@ -185,8 +185,9 @@ class FieldTypeRegistry {
 	 * Range, Email, URL, Password, Select, Checkbox, Button Group, Message,
 	 * File, Date Picker, Date Time Picker, Time Picker) plus Batch C
 	 * (Post Object, Page Link, Relationship, Taxonomy, User, Google Map,
-	 * oEmbed, Gallery). The remaining Phase 2 batches land in later
-	 * checklist items and add their own line here each.
+	 * oEmbed, Gallery) plus Batch D (Group, Flexible Content, Clone). Batch
+	 * D was the final Phase 2 checklist item — Phase 2 (Field Types engine)
+	 * is now complete: 34 built-in field types.
 	 *
 	 * @return array<string, class-string<FieldType>>
 	 */
@@ -223,6 +224,9 @@ class FieldTypeRegistry {
 			'google_map'        => Types\GoogleMap::class,
 			'oembed'            => Types\OEmbed::class,
 			'gallery'           => Types\Gallery::class,
+			'group'             => Types\Group::class,
+			'flexible_content'  => Types\FlexibleContent::class,
+			'clone'             => Types\Clone_::class,
 		);
 	}
 }

@@ -23,7 +23,9 @@ Tracks implementation status against `plugin-blocos-checklist-v2.md` (replaces t
 - [x] Batch A-2 — Repeater (no nested repeaters, CONFIRMED by user 2026-08-17 — the real "Menu's" field group in `acf-json` has a two-level-deep repeater; Phase 3 will reshape that specific field group instead of adding nesting support to the engine)
 - [x] Batch B — remaining "simple" types: Number, Range, Email, URL, Password, Select, Checkbox, Button Group, Message, File, Date Picker, Date Time Picker, Time Picker
 - [x] Batch C — relational types: Post Object, Page Link, Relationship, Taxonomy, User, Google Map, oEmbed, Gallery
-- [ ] Batch D — complex layout types: Group, Flexible Content, Clone
+- [x] Batch D — complex layout types: Group, Flexible Content, Clone
+
+**Phase 2 complete: 34 field types implemented (Batch A-1/A-2/B/C/D), `FieldType` contract, `FieldTypeRegistry` with `gs_register_field_type` filter.**
 
 ## Phase 3 — Field Groups engine
 - [ ] JSON schema for field groups (`field-groups/`)
