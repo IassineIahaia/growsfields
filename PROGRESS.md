@@ -21,7 +21,7 @@ Tracks implementation status against `plugin-blocos-checklist-v2.md` (replaces t
 - [x] `FieldTypeRegistry`
 - [x] Batch A-1 — simple/medium types already confirmed in use: Text, Textarea, TrueFalse, Radio, ColorPicker, Tab, Link, Image, Wysiwyg
 - [x] Batch A-2 — Repeater (no nested repeaters, CONFIRMED by user 2026-08-17 — the real "Menu's" field group in `acf-json` has a two-level-deep repeater; Phase 3 will reshape that specific field group instead of adding nesting support to the engine)
-- [ ] Batch B — remaining "simple" types: Number, Range, Email, URL, Password, Select, Checkbox, Button Group, Message, File, Date Picker, Date Time Picker, Time Picker
+- [x] Batch B — remaining "simple" types: Number, Range, Email, URL, Password, Select, Checkbox, Button Group, Message, File, Date Picker, Date Time Picker, Time Picker
 - [ ] Batch C — relational types: Post Object, Page Link, Relationship, Taxonomy, User, Google Map, oEmbed, Gallery
 - [ ] Batch D — complex layout types: Group, Flexible Content, Clone
 

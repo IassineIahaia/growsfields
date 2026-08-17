@@ -181,24 +181,39 @@ class FieldTypeRegistry {
 	 * Built-in type registrations.
 	 *
 	 * Batch A-1 (Text, Textarea, TrueFalse, Radio, ColorPicker, Tab, Link,
-	 * Image, Wysiwyg) plus Batch A-2 (Repeater). The remaining Phase 2
-	 * batches land in later checklist items and add their own line here
-	 * each.
+	 * Image, Wysiwyg) plus Batch A-2 (Repeater) plus Batch B (Number,
+	 * Range, Email, URL, Password, Select, Checkbox, Button Group, Message,
+	 * File, Date Picker, Date Time Picker, Time Picker). The remaining
+	 * Phase 2 batches land in later checklist items and add their own line
+	 * here each.
 	 *
 	 * @return array<string, class-string<FieldType>>
 	 */
 	private function register_builtin_types(): array {
 		return array(
-			'text'         => Types\Text::class,
-			'textarea'     => Types\Textarea::class,
-			'true_false'   => Types\TrueFalse::class,
-			'radio'        => Types\Radio::class,
-			'color_picker' => Types\ColorPicker::class,
-			'tab'          => Types\Tab::class,
-			'link'         => Types\Link::class,
-			'image'        => Types\Image::class,
-			'wysiwyg'      => Types\Wysiwyg::class,
-			'repeater'     => Types\Repeater::class,
+			'text'              => Types\Text::class,
+			'textarea'          => Types\Textarea::class,
+			'true_false'        => Types\TrueFalse::class,
+			'radio'             => Types\Radio::class,
+			'color_picker'      => Types\ColorPicker::class,
+			'tab'               => Types\Tab::class,
+			'link'              => Types\Link::class,
+			'image'             => Types\Image::class,
+			'wysiwyg'           => Types\Wysiwyg::class,
+			'repeater'          => Types\Repeater::class,
+			'number'            => Types\Number::class,
+			'range'             => Types\Range::class,
+			'email'             => Types\Email::class,
+			'url'               => Types\URL::class,
+			'password'          => Types\Password::class,
+			'select'            => Types\Select::class,
+			'checkbox'          => Types\Checkbox::class,
+			'button_group'      => Types\ButtonGroup::class,
+			'message'           => Types\Message::class,
+			'file'              => Types\File::class,
+			'date_picker'       => Types\DatePicker::class,
+			'date_time_picker'  => Types\DateTimePicker::class,
+			'time_picker'       => Types\TimePicker::class,
 		);
 	}
 }
