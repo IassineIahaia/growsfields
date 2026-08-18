@@ -33,6 +33,17 @@ define( 'GS_URL', plugin_dir_url( __FILE__ ) );
  */
 if ( file_exists( GS_PATH . 'vendor/autoload.php' ) ) {
 	require_once GS_PATH . 'vendor/autoload.php';
+
+	/**
+	 * Bare (non-namespaced) render.php helper functions.
+	 *
+	 * Not PSR-4-autoloadable (no `Growsfields\` class inside), and this
+	 * project's composer.json has no `"files"` autoload section yet to add a
+	 * one-off entry to (adding one would require the maintainer to run
+	 * `composer dump-autoload` in their Local site's Site Shell) — required
+	 * directly here instead, once, right after Composer's own autoloader.
+	 */
+	require_once GS_PATH . 'src/Blocks/block-render-helpers.php';
 } else {
 	add_action(
 		'admin_notices',
