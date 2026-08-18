@@ -37,7 +37,8 @@ Tracks implementation status against `plugin-blocos-checklist-v2.md` (replaces t
 **Phase 3 complete.**
 
 ## Phase 4 — Native Gutenberg blocks
-- [ ] hero
+- [x] Block registration infrastructure (`src/Blocks/BlockLoader.php`) — computes WP block `attributes` per block from whichever field group(s) `LocationResolver` resolves for it (attribute type inferred from each field's `default_value()` PHP shape, not a hardcoded per-type table), hooks `register_block_type()` on `init`, dispatches rendering to `blocks/{slug}/render.php`. Bug found and fixed during review: `tab`/`message` fields (empty `name` by convention) were producing a stray `''` attribute key — now skipped.
+- [x] hero (`blocks/hero/render.php`) — 14 independent test cases pass (attribute computation against real `field-groups/`, multi-group merge via a `cta` sanity check, full render output). `align_image` dropped (confirmed dead in real ACF data); `image` resolved from attachment ID to URL (this plugin's Image field always stores the ID, unlike the original ACF `return_format: "url"`); `esc_html()` used instead of `wp_kses_post()` for the now-guaranteed-plain-text `text` field. **Not yet manually verified in the browser** (no `edit.js` yet, so the block doesn't appear in the inserter — test via wp-admin Code Editor pasting a raw `<!-- wp:growsfields/hero {...} /-->` comment and viewing the frontend). User deferred that manual check to do later, in parallel.
 - [ ] cta
 - [ ] body
 - [ ] headerimage

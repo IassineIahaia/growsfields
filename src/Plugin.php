@@ -7,6 +7,7 @@
 
 namespace Growsfields;
 
+use Growsfields\Blocks\BlockLoader;
 use Growsfields\Fields\FieldTypeRegistry;
 
 // Exit if accessed directly.
@@ -31,6 +32,17 @@ class Plugin {
 	private FieldTypeRegistry $field_types;
 
 	/**
+	 * Registers every native block under `blocks/*\/block.json` and dispatches
+	 * their rendering. Instantiated in {@see self::boot()}; its own
+	 * block-registration method is hooked to `init` there rather than called
+	 * directly, since `register_block_type()` must run on `init` (see
+	 * `BlockLoader`'s own class docblock, "HOOK: init").
+	 *
+	 * @var BlockLoader
+	 */
+	private BlockLoader $block_loader;
+
+	/**
 	 * Returns the plugin version, used purely to confirm autoload works.
 	 *
 	 * @return string
@@ -47,8 +59,10 @@ class Plugin {
 	 */
 	public function boot(): void {
 		$this->field_types = new FieldTypeRegistry();
+		$this->block_loader = new BlockLoader();
 
 		add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
+		add_action( 'init', array( $this->block_loader, 'register_blocks' ) );
 	}
 
 	/**
