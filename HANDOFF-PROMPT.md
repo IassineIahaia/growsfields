@@ -108,35 +108,43 @@ O utilizador pediu explicitamente para dividir o trabalho por subagents "de form
 
 **Nota importante:** um subagent já entregou um bug real (não um falso positivo de teste) — a resolução de `clone` no `FieldGroupLoader` não tratava recursivamente um clone aninhado dentro de um grupo clonado. Foi corrigido diretamente (sem novo subagent) depois de identificado na revisão. Continuar a rever com este nível de detalhe, não só confiar no "smoke test passou" do relatório do subagent.
 
-## ONDE PARÁMOS (estado exato, fim do dia 2026-08-17)
+## ONDE PARÁMOS (estado exato, fim do dia 2026-08-18)
 
-**Fase 1 — Fundação do plugin:** ✅ **completa** (incluindo `uninstall.php`, testado em isolamento via `wp eval-file` depois do incidente de perda de dados).
+**Fase 1 — Fundação do plugin:** ✅ **completa**.
 
-**Fase 2 — Motor de Field Types:** ✅ **completa** — 34 tipos de campo (paridade total ACF Pro), `FieldType` abstrato, `FieldTypeRegistry` com filtro `gs_register_field_type`.
+**Fase 2 — Motor de Field Types:** ✅ **completa** — 34 tipos de campo (paridade total ACF Pro).
 
-**Fase 3 — Motor de Field Groups**, em curso:
-- [x] Schema JSON (`field-groups/SCHEMA.md`, confirmado pelo utilizador)
-- [x] `FieldGroupLoader` (`src/Fields/FieldGroupLoader.php`) — testado, incluindo a correção do bug de clone aninhado
-- [ ] **`LocationResolver` — EM CURSO, subagent lançado, ainda sem resposta quando a sessão parou.** Vai resolver, para um contexto dado (bloco/post_type/options_page/etc.), quais field groups se aplicam, usando as regras `location` (OR-de-AND) do schema. **Ao retomar: verificar se a notificação do subagent já chegou; se sim, rever o ficheiro `src/Fields/LocationResolver.php` a fundo (ver fluxo de trabalho acima) antes de apresentar ao utilizador. Se não, esperar ou relançar.** O subagent foi avisado para sinalizar como decisão a rever: a incompatibilidade entre `location.block` nos dados reais (ainda usa prefixo antigo `acf/...`, ex. `acf/overview`) e os novos blocos nativos registados como `growsfields/...` (Fase 4 prep) — **decidir isto com o utilizador antes de avançar**.
-- [ ] Conditional Logic engine (avaliação das regras já guardadas em `FieldType::get_conditional_logic()` — ainda só round-trip, nada avalia)
-- [ ] Migrar os 7 field groups reais (`acf-json/` do tema) para o novo formato — **incluindo reestruturar "Menu's"** para não usar repeater aninhado (decisão já tomada, ver tabela acima)
+**Fase 3 — Motor de Field Groups:** ✅ **COMPLETA** (fechada em 2026-08-18):
+- [x] Schema JSON (`field-groups/SCHEMA.md`)
+- [x] `FieldGroupLoader`
+- [x] `LocationResolver` (`src/Fields/LocationResolver.php`) — 21 testes próprios. Decisão do prefixo `acf/`→`growsfields/` resolvida na migração (ver abaixo, não precisou de normalização em runtime).
+- [x] `ConditionalLogicEngine` (`src/Fields/ConditionalLogicEngine.php`) — 34 testes próprios. Defaults invertidos face ao `LocationResolver` (documentado no docblock): `[]`=sempre visível, `[[]]`=verdade vácua. **Decisão ainda em aberto, mesma natureza do prefixo de bloco:** se um caller da Fase 4/5/6 deve construir o `values map` só com os campos do próprio grupo, ou alargado a vários grupos — determina se a referência cross-group real (`field_67ed36dd41608`, no campo "Kies overzicht") alguma vez resolve. Ainda não decidido, não bloqueia nada por agora.
+- [x] Migração dos 7 field groups reais (`field-groups/group_*.json`) — prefixo `acf/*`→`growsfields/*` aplicado, "Menu's" (`group_67bc28be09501`) reestruturado de `repeater` aninhado para `flexible_content` com um único layout `"menu"` (decisão do utilizador, 2026-08-18) contendo `menu_title` (text) + `menu_items` (repeater válido). `example-migrated-group.json` removido (era um nome de ficheiro de exemplo, não seguia a convenção `group_<key>.json`).
 
-**Fase 4 — Blocos Gutenberg**, preparação feita (fora do checklist formal, adiantado com autorização do utilizador):
-- [x] `blocks/{hero,cta,body,headerimage,overview,default-block}/block.json` — só metadata estática (nome `growsfields/{slug}`, título, ícone, categoria), **sem `attributes`** (depende do schema da Fase 3)
+**Fase 4 — Blocos Gutenberg nativos**, EM CURSO:
 - [x] Categoria de bloco "Growsfields" registada via `block_categories_all`
-- [ ] Tudo o resto (attributes, `edit.js` genérico, `render.php`, os 6 blocos completos) fica para quando a Fase 3 estiver fechada
+- [x] `src/Blocks/BlockLoader.php` — infraestrutura de registo genérica: para cada `blocks/{slug}/block.json`, resolve os field groups aplicáveis via `LocationResolver`+`FieldGroupLoader`, calcula `attributes` do WP a partir da forma real de `default_value()` de cada campo (sem tabela paralela por tipo), regista via `register_block_type()` no hook `init`, despacha o render para `blocks/{slug}/render.php`. **Decisão confirmada pelo utilizador (2026-08-18):** a função do tema `get_block_classes()` (usada por body/cta/overview) depende do ACF (`get_field()`) — reimplementada nativamente no plugin como `gs_block_classes()` (`src/Blocks/block-render-helpers.php`, função global não-namespaced, `require_once` direto a partir de `growsfields.php`), lendo `$attributes` em vez de `get_field()`. Porto fiel byte-a-byte (incluindo a redundância `no-margin with-margin-none`).
+- [x] `hero` (`blocks/hero/render.php`) — 14 testes próprios. `align_image` confirmado como código morto nos dados reais (nunca existiu em nenhum dos 7 grupos) e **descartado** na reimplementação (não inventado como novo campo).
+- [x] `cta` (`blocks/cta/render.php`) — 20 testes próprios (partilhados com body/default-block), confirma o merge automático com "Block options".
+- [x] `body` (`blocks/body/render.php`) — idem.
+- [x] `default-block` (`blocks/default-block/render.php`) — confirmado ser um **scaffold de desenvolvimento** tanto no tema real como aqui: nenhum field group (nem `acf-json/` original, nem `field-groups/` migrado) alguma vez visou `acf/default-block`/`growsfields/default-block` — só recebe os campos partilhados do "Block options" (via wildcard `all`), nunca renderiza nada em produção. Documentado no topo do ficheiro, não é um bug.
+- [ ] **`headerimage` — PRÓXIMO ITEM.** Simples: só o campo `header_image` (image) + a classe condicional `align-image-*`, que também é código morto (mesma razão do Hero — `align_image` nunca existe nos dados reais). Sem merge de "Block options" (grupo exclui explicitamente `headerimage` e `hero` via `block != growsfields/headerimage`).
+- [ ] `overview` — o mais complexo: usa `WP_Query` e `get_template_part()` para `includes/overview-item-{tipo}.php` / `includes/overview-more.php` (ainda não investigados a fundo — fazer isso antes de implementar). Deixar para depois do `headerimage`.
+- [ ] `edit.js` genérico — só depois dos 6 `render.php` estarem prontos. **Nota importante:** sem `edit.js`, os blocos registados só via PHP **não aparecem no inserter visual** do editor — para testar cada bloco antes disso, colar manualmente o comentário do bloco no "Code editor" do wp-admin (ver exemplo dado ao utilizador na sessão de 2026-08-18 para o Hero) e ver o resultado no frontend.
 
-**Ícone do plugin:** ✅ feito (`assets/icon.svg`, `assets/admin-icon.svg`) — cosmético, não é item do checklist.
+**Nota sobre o `Image` field (relevante para qualquer bloco futuro):** ao contrário do campo ACF original (`return_format: "url"`), o nosso `Image::sanitize()`/`default_value()` guardam sempre o attachment ID (int), nunca a URL — todo `render.php` que usa uma imagem tem de resolver com `wp_get_attachment_image_url( $id, 'full' )` e tratar o caso de attachment apagado (`wp_get_attachment_image_url()` devolve `false`).
 
-**Lembrete do utilizador (2026-08-17):** o objetivo final é validar tudo isto contra o **tema real** `starter-2026-iassine` (`wp-content/themes/starter-2026-iassine/`), de onde vieram os `acf-json` originais — as Fases 3-5 devem ser testadas contra esse tema, não só smoke tests isolados.
+**Ícone do plugin:** ✅ feito, cosmético.
+
+**Lembrete do utilizador (2026-08-17, continua válido):** validar tudo contra o **tema real** `starter-2026-iassine`. Ainda não foi feito nenhum teste manual no browser real — todos os itens da Fase 4 até agora só têm testes PHP isolados (smoke tests com stubs de funções WP), confirmados pelo próprio utilizador como suficientes para continuar sem esperar pelo teste manual a cada item (decisão explícita, 2026-08-18, no item do Hero). Vale a pena fazer uma passagem manual real no Local assim que a Fase 4 tiver mais blocos prontos.
 
 ## PARA ONDE VAMOS (checklist completo)
 
 Ver o ficheiro anexo/fornecido `plugin-blocos-checklist-v2.md` para o roadmap completo e detalhado (Fases 0 a 11). Resumo das fases seguintes após terminar a Fase 1:
 
 - **Fase 2** — ✅ **Completa.** Motor de Field Types, com paridade total ao ACF Pro (34 tipos implementados e testados).
-- **Fase 3** — Motor de Field Groups (parser JSON próprio, `FieldGroupLoader`, `LocationResolver` com regras combináveis AND/OR, Conditional Logic engine, migração dos 7 field groups originais)
-- **Fase 4** — Blocos Gutenberg nativos (hero, cta, body, headerimage, overview, default-block) com `edit.js` genérico dirigido pela definição do field group
+- **Fase 3** — ✅ **Completa (2026-08-18).** Motor de Field Groups: `FieldGroupLoader`, `LocationResolver`, `ConditionalLogicEngine`, migração dos 7 field groups originais.
+- **Fase 4** — **Em curso.** Blocos Gutenberg nativos (hero ✅, cta ✅, body ✅, default-block ✅, headerimage próximo, overview depois) com `edit.js` genérico dirigido pela definição do field group (último item da fase)
 - **Fase 5** — CPT Project com meta boxes nativas
 - **Fase 6** — Options page nativa
 - **Fase 6-B** — Field Group Builder: UI de admin em React para criar/editar campos visualmente, com Conditional Logic, Location Rules completas, Clone field e Export/Import PHP/JSON (confirmado, não opcional, paridade total com a tela "Custom Fields" do ACF Pro)
