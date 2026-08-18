@@ -30,7 +30,7 @@ Tracks implementation status against `plugin-blocos-checklist-v2.md` (replaces t
 ## Phase 3 — Field Groups engine
 - [x] JSON schema for field groups (`field-groups/`) — see `field-groups/SCHEMA.md`, confirmed by user 2026-08-17
 - [x] `FieldGroupLoader`
-- [ ] `LocationResolver` (combinable AND/OR rules, ACF Pro parity)
+- [x] `LocationResolver` (combinable AND/OR rules, ACF Pro parity) — 21 isolated test cases pass (wildcard `all`, `[]` vs `[[]]`, missing-context `==`/`!=`, unknown operator/param, OR/AND, `resolve()` sort + malformed-entry isolation, real `example-migrated-group.json`). **Known gap, confirmed by user 2026-08-18:** no `acf/*`→`growsfields/*` block-name normalization — deferred to the "migrate 7 existing field groups" item below, not fixed at the call site or inside this class.
 - [ ] Conditional Logic engine
 - [ ] Migrate 7 existing field groups to new format
 
