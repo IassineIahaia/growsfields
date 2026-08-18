@@ -31,7 +31,7 @@ Tracks implementation status against `plugin-blocos-checklist-v2.md` (replaces t
 - [x] JSON schema for field groups (`field-groups/`) — see `field-groups/SCHEMA.md`, confirmed by user 2026-08-17
 - [x] `FieldGroupLoader`
 - [x] `LocationResolver` (combinable AND/OR rules, ACF Pro parity) — 21 isolated test cases pass (wildcard `all`, `[]` vs `[[]]`, missing-context `==`/`!=`, unknown operator/param, OR/AND, `resolve()` sort + malformed-entry isolation, real `example-migrated-group.json`). **Known gap, confirmed by user 2026-08-18:** no `acf/*`→`growsfields/*` block-name normalization — deferred to the "migrate 7 existing field groups" item below, not fixed at the call site or inside this class.
-- [ ] Conditional Logic engine
+- [x] Conditional Logic engine (`src/Fields/ConditionalLogicEngine.php`) — 34 independent test cases pass (all 6 operators incl. array-value edge cases, `[]` vs `[[]]` reversed defaults vs. `LocationResolver`, missing-key/unknown-operator non-match, real Button/`amount` case, real cross-group "Kies overzicht"/`field_67ed36dd41608` case). **Known gap, confirmed by user 2026-08-18, mirrors `LocationResolver`'s prefix gap:** whether a caller's `values map` should be scoped to one field group or widened across simultaneously-active groups is not yet decided — determines whether that one real cross-group `conditional_logic.field` reference ever resolves. Deferred to Phase 4/5/6 wiring.
 - [ ] Migrate 7 existing field groups to new format
 
 ## Phase 4 — Native Gutenberg blocks
