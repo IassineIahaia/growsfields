@@ -1,0 +1,31 @@
+{
+  "key": "group_6488b634b12d9",
+  "title": "Block: Headerimage",
+  "fields": [
+    {
+      "key": "field_6488b63421b64",
+      "type": "image",
+      "name": "header_image",
+      "label": "Header image",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "return_format": "url",
+      "preview_size": "medium"
+    }
+  ],
+  "location": [
+    [
+      { "param": "block", "operator": "==", "value": "growsfields/headerimage" }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": [],
+  "active": true,
+  "description": ""
+}

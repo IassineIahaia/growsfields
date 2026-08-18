@@ -1,0 +1,80 @@
+{
+  "key": "group_67d0098cf2948",
+  "title": "Block: CTA",
+  "fields": [
+    {
+      "key": "field_695b86b402c34",
+      "type": "tab",
+      "name": "",
+      "label": "Content",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "placement": "top",
+      "endpoint": false
+    },
+    {
+      "key": "field_67d0098d08177",
+      "type": "text",
+      "name": "title",
+      "label": "Titel",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "default_value": "",
+      "maxlength": "",
+      "placeholder": ""
+    },
+    {
+      "key": "field_67d0098d0be27",
+      "type": "wysiwyg",
+      "name": "text",
+      "label": "Tekst",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "default_value": "",
+      "toolbar": "full",
+      "media_upload": false
+    },
+    {
+      "key": "field_67d0098d0f942",
+      "type": "link",
+      "name": "button",
+      "label": "Knop",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "return_format": "array"
+    },
+    {
+      "key": "field_67d0098d04494",
+      "type": "image",
+      "name": "image",
+      "label": "Afbeelding",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "return_format": "url",
+      "preview_size": "medium"
+    }
+  ],
+  "location": [
+    [
+      { "param": "block", "operator": "==", "value": "growsfields/cta" }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": [],
+  "active": true,
+  "description": ""
+}

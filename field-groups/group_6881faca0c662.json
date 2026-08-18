@@ -1,0 +1,69 @@
+{
+  "key": "group_6881faca0c662",
+  "title": "Block: Hero",
+  "fields": [
+    {
+      "key": "field_6881faca2f9ec",
+      "type": "image",
+      "name": "image",
+      "label": "Image",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "return_format": "url",
+      "preview_size": "medium"
+    },
+    {
+      "key": "field_6881fae02f9ed",
+      "type": "text",
+      "name": "title",
+      "label": "Title",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "default_value": "",
+      "maxlength": "",
+      "placeholder": ""
+    },
+    {
+      "key": "field_68e629058b9ad",
+      "type": "textarea",
+      "name": "text",
+      "label": "Text",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "default_value": "",
+      "maxlength": "",
+      "rows": "",
+      "placeholder": ""
+    },
+    {
+      "key": "field_6881fae92f9ee",
+      "type": "link",
+      "name": "button",
+      "label": "Button",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "return_format": "array"
+    }
+  ],
+  "location": [
+    [
+      { "param": "block", "operator": "==", "value": "growsfields/hero" }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": [],
+  "active": true,
+  "description": ""
+}

@@ -1,0 +1,93 @@
+{
+  "key": "group_67bc28be09501",
+  "title": "Options page",
+  "fields": [
+    {
+      "key": "field_67d00d2fd0580",
+      "type": "wysiwyg",
+      "name": "adress",
+      "label": "Adres",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "default_value": "",
+      "toolbar": "full",
+      "media_upload": false
+    },
+    {
+      "key": "field_67bc28bf1c92b",
+      "type": "flexible_content",
+      "name": "menus",
+      "label": "Menu's",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "button_label": "Nieuwe regel",
+      "min": 0,
+      "max": 0,
+      "layouts": [
+        {
+          "name": "menu",
+          "label": "Menu",
+          "sub_fields": [
+            {
+              "key": "field_67d00d9b366bf",
+              "type": "text",
+              "name": "menu_title",
+              "label": "Menu Titel",
+              "instructions": "",
+              "required": false,
+              "wrapper": { "width": "" },
+              "conditional_logic": [],
+              "default_value": "",
+              "maxlength": ""
+            },
+            {
+              "key": "field_67bc28f41c92c",
+              "type": "repeater",
+              "name": "menu_items",
+              "label": "Menu items",
+              "instructions": "",
+              "required": false,
+              "wrapper": { "width": "" },
+              "conditional_logic": [],
+              "layout": "table",
+              "min": 0,
+              "max": 0,
+              "collapsed": "",
+              "button_label": "Nieuwe regel",
+              "sub_fields": [
+                {
+                  "key": "field_67bc29291c92d",
+                  "type": "link",
+                  "name": "menu_link",
+                  "label": "Menu link",
+                  "instructions": "",
+                  "required": false,
+                  "wrapper": { "width": "" },
+                  "conditional_logic": [],
+                  "return_format": "array"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      { "param": "options_page", "operator": "==", "value": "growskills-extra" }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": [],
+  "active": true,
+  "description": ""
+}

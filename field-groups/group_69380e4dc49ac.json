@@ -1,0 +1,69 @@
+{
+  "key": "group_69380e4dc49ac",
+  "title": "Block options",
+  "fields": [
+    {
+      "key": "field_695b80b46eb91",
+      "type": "tab",
+      "name": "",
+      "label": "Options",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "placement": "top",
+      "endpoint": false
+    },
+    {
+      "key": "field_69380e4ddc637",
+      "type": "radio",
+      "name": "spacing",
+      "label": "Spacing",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "choices": { "full": "Full", "medium": "Medium", "small": "Small", "none": "None" },
+      "default_value": "full"
+    },
+    {
+      "key": "field_695b81848396b",
+      "type": "color_picker",
+      "name": "bg_color",
+      "label": "Background color",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "default_value": "",
+      "enable_opacity": false
+    },
+    {
+      "key": "field_695b8c8fc6046",
+      "type": "radio",
+      "name": "text_color",
+      "label": "Text color",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "choices": { "dark": "Dark", "light": "Light" },
+      "default_value": "dark"
+    }
+  ],
+  "location": [
+    [
+      { "param": "block", "operator": "==", "value": "all" },
+      { "param": "block", "operator": "!=", "value": "growsfields/headerimage" },
+      { "param": "block", "operator": "!=", "value": "growsfields/hero" }
+    ]
+  ],
+  "menu_order": 100,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": [],
+  "active": true,
+  "description": ""
+}

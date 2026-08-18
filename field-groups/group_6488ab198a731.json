@@ -1,0 +1,69 @@
+{
+  "key": "group_6488ab198a731",
+  "title": "Block: Body",
+  "fields": [
+    {
+      "key": "field_695cb7930ba3e",
+      "type": "tab",
+      "name": "",
+      "label": "Content",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "placement": "top",
+      "endpoint": false
+    },
+    {
+      "key": "field_6488b4fed3e89",
+      "type": "true_false",
+      "name": "show_title",
+      "label": "Toon titel",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "default_value": false,
+      "ui": true,
+      "ui_on_text": "",
+      "ui_off_text": ""
+    },
+    {
+      "key": "field_6488ab19ee2b1",
+      "type": "wysiwyg",
+      "name": "body",
+      "label": "Body",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "default_value": "",
+      "toolbar": "full",
+      "media_upload": true
+    },
+    {
+      "key": "field_693facdd7516f",
+      "type": "link",
+      "name": "button",
+      "label": "Button",
+      "instructions": "",
+      "required": false,
+      "wrapper": { "width": "" },
+      "conditional_logic": [],
+      "return_format": "array"
+    }
+  ],
+  "location": [
+    [
+      { "param": "block", "operator": "==", "value": "growsfields/body" }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": [],
+  "active": true,
+  "description": ""
+}

@@ -73,7 +73,7 @@
   ],
   "location": [
     [
-      { "param": "block", "operator": "==", "value": "acf/overview" }
+      { "param": "block", "operator": "==", "value": "growsfields/overview" }
     ]
   ],
   "menu_order": 0,
